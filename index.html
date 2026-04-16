@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Kalkulator Elektro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* tampilan khusus HP — berlaku saat lebar layar di bawah 600px */
+       /* tampilan khusus HP — berlaku saat lebar layar di bawah 600px */
+      @media (max-width: 600px) {
+
+        header {
+          padding: 12px 20px;
+        }
+
+        .logo {
+          font-size: 18px;
+        }
+
+        .hero {
+          padding: 30px 15px;
+        }
+
+        .hero h1 {
+          font-size: 22px;
+        }
+
+        .konten-menu {
+          padding: 25px 15px;
+        }
+
+        .kartu-menu {
+          width: 100%;
+        }
+
+        .konten-kalkulator {
+          padding: 25px 15px;
+        }
+
+        .kotak-kalkulator {
+          padding: 20px 15px;
+        }
+
+        nav {
+          display: none;
+        }
+
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #eaf2fb;
+      }
+
+      /* ── HEADER ── */
+      header {
+        background-color: #1a5276;
+        padding: 15px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .logo span {
+        color: #f39c12;
+      }
+
+      .tombol-kembali {
+        color: #aed6f1;
+        font-size: 13px;
+        cursor: pointer;
+        padding: 7px 14px;
+        border-radius: 6px;
+        border: 1px solid #aed6f1;
+        background: none;
+      }
+
+      .tombol-kembali:hover {
+        background-color: #2980b9;
+        color: white;
+        border-color: #2980b9;
+      }
+
+      /* ── HERO ── */
+      .hero {
+        background-color: #21618c;
+        text-align: center;
+        padding: 50px 20px;
+        color: white;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      .hero p {
+        font-size: 15px;
+        color: #aed6f1;
+      }
+
+      /* ── HALAMAN (semua halaman pakai class ini) ── */
+      .halaman {
+        display: none;
+      }
+
+      .halaman.aktif {
+        display: block;
+      }
+
+      /* ── HALAMAN MENU ── */
+      .konten-menu {
+        padding: 40px 30px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .judul-menu {
+        text-align: center;
+        color: #1a5276;
+        font-size: 20px;
+        margin-bottom: 30px;
+      }
+
+      .grid-menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .kartu-menu {
+        background-color: white;
+        border: 1px solid #d6eaf8;
+        border-radius: 12px;
+        padding: 30px 25px;
+        width: 250px;
+        text-align: center;
+        cursor: pointer;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .kartu-menu:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        border-color: #2980b9;
+      }
+
+      .kartu-menu .nomor {
+        font-size: 28px;
+        font-weight: bold;
+        color: #2980b9;
+        margin-bottom: 10px;
+      }
+
+      .kartu-menu .nama {
+        font-size: 16px;
+        font-weight: bold;
+        color: #1a5276;
+        margin-bottom: 8px;
+      }
+
+      .kartu-menu .rumus {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-bottom: 15px;
+      }
+
+      .kartu-menu .tombol-masuk {
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 20px;
+        font-size: 13px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .kartu-menu .tombol-masuk:hover {
+        background-color: #1a5276;
+      }
+
+      /* ── HALAMAN KALKULATOR ── */
+      .konten-kalkulator {
+        padding: 40px 30px;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .kotak-kalkulator {
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid #d6eaf8;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      h2 {
+        color: #2980b9;
+        font-size: 20px;
+        margin-bottom: 8px;
+      }
+
+      .deskripsi-rumus {
+        font-size: 13px;
+        color: #7f8c8d;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #d6eaf8;
+      }
+
+      label {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: 14px;
+      }
+
+      input, select {
+        padding: 10px;
+        margin-top: 6px;
+        width: 100%;
+        font-size: 14px;
+        border: 1px solid #aed6f1;
+        border-radius: 6px;
+        box-sizing: border-box;
+        margin-bottom: 15px;
+      }
+
+      input:focus, select:focus {
+        outline: none;
+        border: 1px solid #2980b9;
+        box-shadow: 0px 0px 6px rgba(41, 128, 185, 0.3);
+      }
+
+      button {
+        padding: 10px 22px;
+        background-color: #2980b9;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-right: 8px;
+        margin-top: 5px;
+      }
+
+      button:hover {
+        background-color: #1a5276;
+      }
+
+      .hasil {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #1e8449;
+        font-weight: bold;
+        background-color: #eafaf1;
+        padding: 12px 16px;
+        border-radius: 8px;
+        border-left: 4px solid #27ae60;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        background-color: #1a5276;
+        color: #aed6f1;
+        text-align: center;
+        padding: 20px;
+        font-size: 13px;
+        margin-top: 50px;
+      }
+
+      .tombol-kembali {
+        display: none;
+      }
+
+      .tombol-kembali.aktif {
+        display: block;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <div class="logo">Electro<span>Calc</span></div>
+      <button class="tombol-kembali" onclick="kembaliKeMenu()"> Kembali ke Menu</button>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1>Kalkulator Teknik Elektro</h1>
+      <p>JUSEF ROSJANA SYABAN &nbsp;|&nbsp; UNIVERSITAS SILIWANGI</p>
+    </div>
+
+
+    <!-- ═══════════ HALAMAN MENU ═══════════ -->
+    <div id="halaman-menu" class="halaman aktif">
+      <div class="konten-menu">
+
+        <p class="judul-menu">Pilih kalkulator yang ingin digunakan:</p>
+
+        <div class="grid-menu">
+
+          <div class="kartu-menu">
+            <div class="nomor">01</div>
+            <div class="nama">Hukum Ohm</div>
+            <button class="tombol-masuk" onclick="bukaHalaman('halaman-ohm')">Buka Kalkulator</button>
+          </div>
+
+          <div class="kartu-menu">
+            <div class="nomor">02</div>
+            <div class="nama">Daya Listrik</div>
+            <button class="tombol-masuk" onclick="bukaHalaman('halaman-daya')">Buka Kalkulator</button>
+          </div>
+
+          <div class="kartu-menu">
+            <div class="nomor">03</div>
+            <div class="nama">Rangkaian Resistor</div>
+            <button class="tombol-masuk" onclick="bukaHalaman('halaman-resistor')">Buka Kalkulator</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════ HALAMAN KALKULATOR 1: HUKUM OHM ═══════════ -->
+    <div id="halaman-ohm" class="halaman">
+      <div class="konten-kalkulator">
+        <div class="kotak-kalkulator">
+
+          <h2>Hukum Ohm</h2>
+          <p class="deskripsi-rumus">
+            Rumus arus     : I = V / R<br>
+            Rumus tegangan : V = I x R<br>
+            Rumus hambatan : R = V /I
+          </p>
+
+          <label>Tegangan (V) dalam Volt:</label>
+          <input type="number" id="tegangan" placeholder="Contoh: 12">
+
+          <label>Hambatan (R) dalam Ohm:</label>
+          <input type="number" id="hambatan" placeholder="Contoh: 4">
+          
+          <label>Arus (I) dalam Ampere:</label>
+          <input type="number" id="arus" placeholder="Contoh : 4">
+
+          <button onclick="hitungArus()">Hitung Arus</button>
+          <button onclick="hitungTegangan()">Hitung Tegangan</button>
+          <button onclick="hitungHambatan()">Hitung Hambatan</button>
+
+          <p class="hasil">Hasil: <span id="hasil-ohm">-</span></p>
+          
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════ HALAMAN KALKULATOR 2: DAYA LISTRIK ═══════════ -->
+    <div id="halaman-daya" class="halaman">
+      <div class="konten-kalkulator">
+        <div class="kotak-kalkulator">
+
+          <h2>Daya Listrik — Mencari Daya (P)</h2>
+          <p class="deskripsi-rumus">Rumus: P = V x I &nbsp;|&nbsp; Isi dua nilai di bawah ini</p>
+
+          <label>Tegangan (V):</label>
+          <input type="number" id="daya-tegangan" placeholder="Contoh: 220">
+
+          <label>Arus (I) dalam Ampere:</label>
+          <input type="number" id="daya-arus" placeholder="Contoh: 2">
+
+          <button onclick="hitungDaya()">Hitung</button>
+
+          <p class="hasil">Hasil: <span id="hasil-daya">-</span></p>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══════════ HALAMAN KALKULATOR 3: RANGKAIAN RESISTOR ═══════════ -->
+    <div id="halaman-resistor" class="halaman">
+      <div class="konten-kalkulator">
+        <div class="kotak-kalkulator">
+
+          <h2>Rangkaian Resistor</h2>
+          <p class="deskripsi-rumus">Masukkan nilai resistor dalam Ohm</p>
+
+          <div id="daftar-resistor">
+            <label>Resistor 1 (R1):</label>
+            <input type="number" id="r1" placeholder="Contoh: 10">
+
+            <label>Resistor 2 (R2):</label>
+            <input type="number" id="r2" placeholder="Contoh: 20">
+
+            <label>Resistor 3 (R3):</label>
+            <input type="number" id="r3" placeholder="Contoh: 30">
+          </div>
+          
+          <br><br>
+          
+          <button onclick="hitungSeri()">Hitung Seri</button>
+          <button onclick="hitungParalel()">Hitung Paralel</button>
+
+          <p class="hasil">Hasil Seri: <span id="hasil-seri">-</span></p>
+          <p class="hasil">Hasil Paralel: <span id="hasil-paralel">-</span></p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>Kalkulator Teknik Elektro &nbsp;|&nbsp; JUSEF ROSJANA SYABAN &nbsp;|&nbsp; 2025</p>
+    </footer>
+
+
+    <script>
+
+      // ── FUNGSI NAVIGASI ──
+      function bukaHalaman(idHalaman) {
+
+  // sembunyikan semua halaman dulu
+  var semuaHalaman = document.querySelectorAll('.halaman');
+  semuaHalaman.forEach(function(halaman) {
+    halaman.classList.remove('aktif');
+  });
+
+  // tampilkan halaman yang dipilih
+  document.getElementById(idHalaman).classList.add('aktif');
+
+  // tampilkan tombol kembali
+  document.querySelector('.tombol-kembali').classList.add('aktif');
+
+  // scroll ke atas
+  window.scrollTo(0, 0);
+
+}
+
+function kembaliKeMenu() {
+  bukaHalaman('halaman-menu');
+
+  // sembunyikan tombol kembali lagi
+  document.querySelector('.tombol-kembali').classList.remove('aktif');
+}
+
+      // ── FUNGSI KALKULATOR ──
+
+      function hitungArus() {
+        var V = parseFloat(document.getElementById("tegangan").value);
+        var R = parseFloat(document.getElementById("hambatan").value);
+        if (isNaN(V) || isNaN(R)) { document.getElementById("hasil-ohm").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        if (R === 0) { document.getElementById("hasil-ohm").innerHTML = "Error: hambatan tidak boleh 0!"; return; }
+        var I = V / R;
+        document.getElementById("hasil-ohm").innerHTML = I.toFixed(3) + " Ampere";
+      }
+
+      function hitungTegangan() {
+        var R = parseFloat(document.getElementById("hambatan").value);
+        var I = parseFloat(document.getElementById("arus").value);
+        if (isNaN(I) || isNaN(R)) { document.getElementById("hasil-ohm").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        if (R === 0) { document.getElementById("hasil-ohm").innerHTML = "Error: hambatan tidak boleh 0!"; return; }
+        var V = I * R;
+        document.getElementById("hasil-ohm").innerHTML = V.toFixed(3) + " Volt";
+      }
+
+      function hitungHambatan() {
+        var V = parseFloat(document.getElementById("tegangan").value);
+        var I = parseFloat(document.getElementById("arus").value);
+        if (isNaN(V) || isNaN(I)) { document.getElementById("hasil-ohm").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        if (V === 0) { document.getElementById("hasil-ohm").innerHTML = "Error: tegangan tidak boleh 0!"; return; }
+        var R = V / I;
+        document.getElementById("hasil-ohm").innerHTML = R.toFixed(3) + " Ohm";
+      }
+
+      function hitungDaya() {
+        var V = parseFloat(document.getElementById("daya-tegangan").value);
+        var I = parseFloat(document.getElementById("daya-arus").value);
+        if (isNaN(V) || isNaN(I)) { document.getElementById("hasil-daya").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        var P = V * I;
+        document.getElementById("hasil-daya").innerHTML = P.toFixed(2) + " Watt";
+      }
+
+      function hitungSeri() {
+        var R1 = parseFloat(document.getElementById("r1").value);
+        var R2 = parseFloat(document.getElementById("r2").value);
+        var R3 = parseFloat(document.getElementById("r3").value);
+        if (isNaN(R1) || isNaN(R2) || isNaN(R3)) { document.getElementById("hasil-seri").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        var Rtotal = R1 + R2 + R3;
+        document.getElementById("hasil-seri").innerHTML = Rtotal.toFixed(2) + " Ohm";
+      }
+
+      function hitungParalel() {
+        var R1 = parseFloat(document.getElementById("r1").value);
+        var R2 = parseFloat(document.getElementById("r2").value);
+        var R3 = parseFloat(document.getElementById("r3").value);
+        if (isNaN(R1) || isNaN(R2) || isNaN(R3)) { document.getElementById("hasil-paralel").innerHTML = "Error: isi semua kotak dulu!"; return; }
+        if (R1 === 0 || R2 === 0 || R3 === 0) { document.getElementById("hasil-paralel").innerHTML = "Error: resistor tidak boleh 0!"; return; }
+        var Rtotal = 1 / (1/R1 + 1/R2 + 1/R3);
+        document.getElementById("hasil-paralel").innerHTML = Rtotal.toFixed(2) + " Ohm";
+      }
+
+    </script>
+
+  </body>
+
+</html>
